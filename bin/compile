@@ -13,22 +13,7 @@ mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
 
-HASH=(find \
-  app/assets \
-  vendor/assets \
-  Gemfile.lock \
-  .babelrc \
-  .nvmrc \
-  webpack.config.js \
-  yarn.lock \
-  config/initializers/assets.rb \
-  postcss.config.js \
-  -type f \
-    | grep -v -E -- '(-dist\.js|-dist\.scss|\.test\.js|bundle-test\.js|\.js\.map)$' \
-    | xargs sha1sum \
-    | sort -d \
-    | sha1sum \
-    | awk '{print $1}')
+HASH=$(bin/hash_asset_dependencies)
 
 if [ ! -d $CACHE_DIR/assets-$HASH ]; then
  cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
