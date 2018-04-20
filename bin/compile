@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
-# fail fast
-set -e
-
-set -x
+set -e # fail fast
 
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-for e in $(ls $3); do
-  echo "$e"
-  echo $(cat $3/$e)
-  :
-done
+printenv
 
 mkdir -p $CACHE_DIR
 
