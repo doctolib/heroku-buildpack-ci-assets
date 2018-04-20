@@ -26,7 +26,7 @@ else
   date +"%T"
   cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH/assets 
   cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH/webpack
-end
+fi
 
 # pruning the cache ?
 # remove { "url": "heroku/nodejs" } and install node and packages in the else branch ?
