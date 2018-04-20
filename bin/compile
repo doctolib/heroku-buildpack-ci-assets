@@ -6,8 +6,6 @@ set -e # fail fast
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-printenv
-
 mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
