@@ -13,7 +13,7 @@ mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
 
-HASH=find \
+HASH=(find \
   app/assets \
   vendor/assets \
   Gemfile.lock \
@@ -28,7 +28,7 @@ HASH=find \
     | xargs sha1sum \
     | sort -d \
     | sha1sum \
-    | awk '{print $1}'
+    | awk '{print $1}')
 
 if [ ! -d $CACHE_DIR/assets-$HASH ]; then
  cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
