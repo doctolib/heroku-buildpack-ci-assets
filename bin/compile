@@ -19,7 +19,7 @@ else
   date +"%T"
   npm run build:dev:local
   date +"%T"
-  rake assets:precompile
+  bundle exec rake assets:precompile
   date +"%T"
   cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH/assets 
   cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH/webpack
