@@ -15,7 +15,7 @@ cd $BUILD_DIR
 
 HASH=$(bin/hash_asset_dependencies)
 
-if [ ! -d $CACHE_DIR/assets-$HASH ]; then
+if [ -d $CACHE_DIR/assets-$HASH ]; then
  cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
  cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
 else
