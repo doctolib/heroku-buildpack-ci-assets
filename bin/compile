@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# fail fast
+set -e
+
+mkdir -p $CACHE_DIR
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+HASH=hash_asset_dependencies
+
+if [ ! -d $CACHE_DIR/assets-$HASH ]; then
+ cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
+ cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
+else
+  date +"%T"
+  npm run build:dev:local
+  date +"%T"
+  rake assets:precompile
+  date +"%T"
+  cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH/assets 
+  cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH/webpack
+end
+
+# pruning the cache ?
+# remove { "url": "heroku/nodejs" } and install node and packages in the else branch ?
