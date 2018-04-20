@@ -4,6 +4,8 @@
 # fail fast
 set -e
 
+set -x
+
 mkdir -p $CACHE_DIR
 
 BUILD_DIR=$1
