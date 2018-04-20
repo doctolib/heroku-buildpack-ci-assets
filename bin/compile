@@ -9,6 +9,12 @@ set -x
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+for e in $(ls $3); do
+  echo "$e"
+  echo $(cat $3/$e)
+  :
+done
+
 mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
