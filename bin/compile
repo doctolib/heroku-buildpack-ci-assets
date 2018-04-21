@@ -14,12 +14,12 @@ mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
 HASH=$(bin/hash_asset_dependencies)
+ASSETS_CACHE_DIR=$CACHE_DIR/assets-$HASH
 
-if [ -d $CACHE_DIR/assets-$HASH ]; then
+if [ -d $ASSETS_CACHE_DIR ]; then
   echo "Copying cached assets for hash $HASH" | indent
   du -h --max-depth=1 $CACHE_DIR
-  cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
-  cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
+  cp -r $ASSETS_CACHE_DIR/ $BUILD_DIR/public
 else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T"
@@ -29,7 +29,10 @@ else
   source $BUILD_DIR/.profile.d/ruby.sh
   rake assets:precompile | indent
   date +"%T"
-  mkdir $CACHE_DIR/assets-$HASH
-  cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH
-  cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH
+  mkdir $ASSETS_CACHE_DIR
+  cp -r $BUILD_DIR/public/assets $ASSETS_CACHE_DIR
+  cp -r $BUILD_DIR/public/webpack $ASSETS_CACHE_DIR
 fi
+echo `date +"%F %T"` > $ASSETS_CACHE_DIR/last_use
+
+ruby prune_cache.rb $CACHE_DIR
