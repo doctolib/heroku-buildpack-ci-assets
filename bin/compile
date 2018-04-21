@@ -8,10 +8,9 @@ set -e # fail fast
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+ENV_DIR=$3
 
 mkdir -p $CACHE_DIR
-
-cat $3/HEROKU_TEST_RUN_COMMIT_VERSION
 
 cd $BUILD_DIR
 HASH=$(bin/hash_asset_dependencies)
@@ -23,7 +22,7 @@ if [ -d $CACHE_DIR/assets-$HASH ]; then
 else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T"
-  export HEROKU_TEST_RUN_COMMIT_VERSION=`cat $3/HEROKU_TEST_RUN_COMMIT_VERSION`
+  export HEROKU_TEST_RUN_COMMIT_VERSION=`cat $ENV_DIR/HEROKU_TEST_RUN_COMMIT_VERSION`
   npm run build:dev:local | indent
   date +"%T"
   source $BUILD_DIR/.profile.d/ruby.sh
@@ -33,6 +32,3 @@ else
   cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH
   cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH
 fi
-
-# pruning the cache ?
-# remove { "url": "heroku/nodejs" } and install node and packages in the else branch ?
