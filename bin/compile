@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
+indent() {
+  sed -u 's/^/       /'
+}
 set -e # fail fast
 
 BUILD_DIR=$1
@@ -9,13 +12,16 @@ CACHE_DIR=$2
 mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
-
+echo $PATH
+exit 1
 HASH=$(bin/hash_asset_dependencies)
 
 if [ -d $CACHE_DIR/assets-$HASH ]; then
- cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
- cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
+  echo "Copying cached assets for hash $HASH" | indent
+  cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
+  cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
 else
+  echo "No assets in cache for hash $HASH" | indent
   date +"%T"
   npm run build:dev:local
   date +"%T"
