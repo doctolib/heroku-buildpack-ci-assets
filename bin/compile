@@ -17,8 +17,6 @@ cd $BUILD_DIR
 HASH=$(bin/hash_asset_dependencies)
 ASSETS_CACHE_DIR=$CACHE_DIR/assets-$HASH
 
-rm -r $CACHE_DIR/assets-*
-
 if [ -d $ASSETS_CACHE_DIR ]; then
   echo "Copying cached assets for hash $HASH" | indent
   cp -r $ASSETS_CACHE_DIR/ $BUILD_DIR/public
