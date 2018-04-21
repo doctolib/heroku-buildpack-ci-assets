@@ -6,6 +6,7 @@ indent() {
 }
 set -e # fail fast
 
+BUILDPACK_DIR=`pwd`
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
@@ -18,7 +19,6 @@ ASSETS_CACHE_DIR=$CACHE_DIR/assets-$HASH
 
 if [ -d $ASSETS_CACHE_DIR ]; then
   echo "Copying cached assets for hash $HASH" | indent
-  du -h --max-depth=1 $CACHE_DIR
   cp -r $ASSETS_CACHE_DIR/ $BUILD_DIR/public
 else
   echo "No assets in cache for hash $HASH" | indent
@@ -35,4 +35,4 @@ else
 fi
 echo `date +"%F %T"` > $ASSETS_CACHE_DIR/last_use
 
-ruby prune_cache.rb $CACHE_DIR
+ruby $BUILDPACK_DIR/prune_cache.rb $CACHE_DIR
