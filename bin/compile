@@ -27,8 +27,9 @@ else
   source $BUILD_DIR/.profile.d/ruby.sh
   rake assets:precompile
   date +"%T"
-  cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH/assets 
-  cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH/webpack
+  mkdir $CACHE_DIR/assets-$HASH
+  cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH
+  cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH
 fi
 
 # pruning the cache ?
