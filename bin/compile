@@ -11,7 +11,7 @@ CACHE_DIR=$2
 
 mkdir -p $CACHE_DIR
 
-ls $3
+cat $3/HEROKU_TEST_RUN_COMMIT_VERSION
 
 cd $BUILD_DIR
 HASH=$(bin/hash_asset_dependencies)
@@ -23,7 +23,7 @@ if [ -d $CACHE_DIR/assets-$HASH ]; then
 else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T"
-  export HEROKU_TEST_RUN_COMMIT_VERSION=$SOURCE_VERSION
+  export HEROKU_TEST_RUN_COMMIT_VERSION=`cat $3/HEROKU_TEST_RUN_COMMIT_VERSION`
   npm run build:dev:local | indent
   date +"%T"
   source $BUILD_DIR/.profile.d/ruby.sh
