@@ -35,4 +35,4 @@ else
 fi
 echo `date +"%F %T"` > $ASSETS_CACHE_DIR/last_use
 
-ruby $BUILDPACK_DIR/prune_cache.rb $CACHE_DIR
+ruby $BUILDPACK_DIR/prune_cache.rb $CACHE_DIR | indent
