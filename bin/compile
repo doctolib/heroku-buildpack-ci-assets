@@ -17,6 +17,8 @@ HASH=$(bin/hash_asset_dependencies)
 
 if [ -d $CACHE_DIR/assets-$HASH ]; then
   echo "Copying cached assets for hash $HASH" | indent
+  ls -lh $CACHE_DIR
+  df -h $CACHE_DIR/assets-$HASH
   cp -r $CACHE_DIR/assets-$HASH/assets $BUILD_DIR/public/assets
   cp -r $CACHE_DIR/assets-$HASH/webpack $BUILD_DIR/public/webpack
 else
