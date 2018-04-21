@@ -12,8 +12,7 @@ CACHE_DIR=$2
 mkdir -p $CACHE_DIR
 
 cd $BUILD_DIR
-echo $PATH
-exit 1
+
 HASH=$(bin/hash_asset_dependencies)
 
 if [ -d $CACHE_DIR/assets-$HASH ]; then
@@ -25,7 +24,8 @@ else
   date +"%T"
   npm run build:dev:local
   date +"%T"
-  /app/bin/bundle exec rake assets:precompile
+  source $BUILD_DIR/.profile.d/ruby.sh
+  rake assets:precompile
   date +"%T"
   cp -r $BUILD_DIR/public/assets $CACHE_DIR/assets-$HASH/assets 
   cp -r $BUILD_DIR/public/webpack $CACHE_DIR/assets-$HASH/webpack
