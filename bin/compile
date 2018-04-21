@@ -11,7 +11,12 @@ CACHE_DIR=$2
 
 mkdir -p $CACHE_DIR
 
-echo "GIT_DIR: $GIT_DIR"
+cd $CACHE_DIR/..
+ls
+cat HEAD
+REF=`cat HEAD | awk '{ print $2 }'`
+HEROKU_TEST_RUN_COMMIT_VERSION=`cat $REF`
+echo "HEROKU_TEST_RUN_COMMIT_VERSION $HEROKU_TEST_RUN_COMMIT_VERSION"
 
 cd $BUILD_DIR
 HASH=$(bin/hash_asset_dependencies)
@@ -24,7 +29,7 @@ else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T"
   cd $GIT_DIR
-  export HEROKU_TEST_RUN_COMMIT_VERSION=$(git rev-parse HEAD)
+  export HEROKU_TEST_RUN_COMMIT_VERSION
   cd $BUILD_DIR
   npm run build:dev:local | indent
   date +"%T"
