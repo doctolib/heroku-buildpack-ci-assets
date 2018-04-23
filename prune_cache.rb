@@ -1,12 +1,11 @@
 require 'fileutils'
+require 'time'
 
 puts 'Pruning cached assets'
-
-caches = Dir["#{ARGV.first}/assets-*"]
-
-while caches.size > 20
-  lru_cache = caches.min_by { |directory| IO.read "#{directory}/last_use" }
-  puts "Prune directory #{lru_cache}"
-  FileUtils.remove_dir lru_cache
-  caches.delete lru_cache
-end
+Dir["#{ARGV.first}/assets-*"]
+  .sort_by { |directory| Time.parse(IO.read("#{directory}/last_use")) }
+  .reverse.drop(20)
+  .each do |cache_dir|
+    puts "Prune directory #{cache_dir}"
+    FileUtils.remove_dir cache_dir
+  end
