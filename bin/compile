@@ -25,6 +25,7 @@ else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T" | indent
   export HEROKU_TEST_RUN_COMMIT_VERSION=`cat $ENV_DIR/HEROKU_TEST_RUN_COMMIT_VERSION`
+  export GIT_COMMIT_SHA1=${HEROKU_TEST_RUN_COMMIT_VERSION}
   npm run build:dev:local | indent
   date +"%T" | indent
   source $BUILD_DIR/.profile.d/ruby.sh
