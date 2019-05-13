@@ -29,7 +29,7 @@ else
   npm run build:dev:local | indent
   date +"%T" | indent
   source $BUILD_DIR/.profile.d/ruby.sh
-  rake assets:precompile | indent
+  WEBPACKER_PRECOMPILE=false rake assets:precompile | indent
   date +"%T" | indent
   mkdir $ASSETS_CACHE_DIR
   cp -r $BUILD_DIR/public/assets $ASSETS_CACHE_DIR
