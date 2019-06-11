@@ -21,21 +21,19 @@ if [ -d $ASSETS_CACHE_DIR ]; then
   echo "Copying cached assets for hash $HASH" | indent
   cp -r $ASSETS_CACHE_DIR/assets $BUILD_DIR/public/assets
   cp -r $ASSETS_CACHE_DIR/webpack $BUILD_DIR/public/webpack
-  cp -r $ASSETS_CACHE_DIR/webpack-test $BUILD_DIR/public/webpack-test
 else
   echo "No assets in cache for hash $HASH" | indent
   date +"%T" | indent
   export HEROKU_TEST_RUN_COMMIT_VERSION=`cat $ENV_DIR/HEROKU_TEST_RUN_COMMIT_VERSION`
   export GIT_COMMIT_SHA1=${HEROKU_TEST_RUN_COMMIT_VERSION}
-  RAILS_ENV=test npm run build:dev:local | indent
+  npm run build:dev:local | indent
   date +"%T" | indent
   source $BUILD_DIR/.profile.d/ruby.sh
-  RAILS_ENV=test WEBPACKER_PRECOMPILE=false rake assets:precompile | indent
+  WEBPACKER_PRECOMPILE=false rake assets:precompile | indent
   date +"%T" | indent
   mkdir $ASSETS_CACHE_DIR
   cp -r $BUILD_DIR/public/assets $ASSETS_CACHE_DIR
   cp -r $BUILD_DIR/public/webpack $ASSETS_CACHE_DIR
-  cp -r $BUILD_DIR/public/webpack-test $ASSETS_CACHE_DIR
 fi
 
 date -R > $ASSETS_CACHE_DIR/last_use
